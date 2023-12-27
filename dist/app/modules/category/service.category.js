@@ -21,7 +21,7 @@ const createCategory = (user, payload) => __awaiter(void 0, void 0, void 0, func
 });
 // get all category
 const getAllCategory = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield model_category_1.Category.find().populate('createdBy');
+    const result = yield model_category_1.Category.find().populate('createdBy', '-password -createdAt -updatedAt');
     return result;
 });
 exports.categoryServices = {

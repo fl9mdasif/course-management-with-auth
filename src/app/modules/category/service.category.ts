@@ -18,7 +18,10 @@ const createCategory = async (user: JwtPayload, payload: TCategory) => {
 
 // get all category
 const getAllCategory = async () => {
-  const result = await Category.find().populate('createdBy');
+  const result = await Category.find().populate(
+    'createdBy',
+    '-password -createdAt -updatedAt',
+  );
   return result;
 };
 

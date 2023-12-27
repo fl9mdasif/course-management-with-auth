@@ -72,7 +72,7 @@ const getAllCourses = (payload) => __awaiter(void 0, void 0, void 0, function* (
         // calculate skip value for pagination
         const skip = (parseInt(String(page)) - 1) * parseInt(String(limit));
         const result = yield model_course_1.Course.find(filter)
-            .populate('createdBy')
+            .populate('createdBy', '-password -createdAt -updatedAt')
             .sort(sort)
             .skip(skip)
             .limit(parseInt(String(limit)));
@@ -87,11 +87,11 @@ const getAllCourses = (payload) => __awaiter(void 0, void 0, void 0, function* (
 const getSingleCourseWithReview = (id) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(id);
     const singleCourse = yield model_course_1.Course.findById(id)
-        .populate('createdBy', '-password')
+        .populate('createdBy', '-password -createdAt -updatedAt -__v')
         .lean();
     // get reviews
     const reviews = yield model_review_1.Review.find({ courseId: id })
-        .populate('createdBy', '-password')
+        .populate('createdBy', '-password -createdAt -updatedAt -__v')
         .lean();
     // console.log(reviews);
     const courseWithReviews = Object.assign(Object.assign({}, singleCourse), { reviews: [...reviews] });

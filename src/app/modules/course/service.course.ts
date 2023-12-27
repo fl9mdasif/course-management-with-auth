@@ -70,7 +70,7 @@ const getAllCourses = async (payload: Record<string, unknown>) => {
     const skip = (parseInt(String(page)) - 1) * parseInt(String(limit));
 
     const result = await Course.find(filter)
-      .populate('createdBy')
+      .populate('createdBy', '-password -createdAt -updatedAt')
       .sort(sort)
       .skip(skip)
       .limit(parseInt(String(limit)));
@@ -87,12 +87,12 @@ const getSingleCourseWithReview = async (id: string) => {
   // console.log(id);
 
   const singleCourse = await Course.findById(id)
-    .populate('createdBy', '-password')
+    .populate('createdBy', '-password -createdAt -updatedAt -__v')
     .lean();
 
   // get reviews
   const reviews = await Review.find({ courseId: id })
-    .populate('createdBy', '-password')
+    .populate('createdBy', '-password -createdAt -updatedAt -__v')
     .lean();
   // console.log(reviews);
 
