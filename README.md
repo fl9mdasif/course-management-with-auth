@@ -2,15 +2,13 @@
 
 ### [live Server Link](https://course-management-brainic.vercel.app)
 
-## Technology Stack:
-
-### Programming Language: TypeScript
-
-### Web Framework: Express.js
-
-### Object Data Modeling (ODM) and Validation Library: Mongoose for MongoDB
+### [Postman Api Documentation](https://documenter.getpostman.com/view/27499806/2s9YkuYHnC)
 
 # Models:
+
+## O.O [Project Overview](#Project-Overview)
+
+## 0.1 [Technology Stack](#Technology-Stacks)
 
 ## 1. [Register user](#Register-user)
 
@@ -36,9 +34,83 @@
 
 ## 12. [Validation-with-Zod](#Validation-with-Zod)
 
-Implementeded proper error handling throughout the application. Using global error handling middleware to catch and handle errors, providing appropriate error responses with status codes and error messages.
+### Object Data Modeling (ODM) and Validation Library: Mongoose for MongoDB
 
-## Endpoints:
+# Project-Overview
+
+## User Authentication and Authorization
+
+This project focuses on implementing robust user authentication and authorization mechanisms. Key features include:
+
+### User Registration, Login, and Password Change
+
+- **User Registration:** Users can register by providing essential details like username, email, and password.
+
+- **User Login:** Registered users can securely log in, and the system authenticates their identity using JWT (JSON Web Tokens).
+
+- **Password Change:** Users can change their passwords securely, and the system enforces password management best practices.
+
+### JWT-Based Authentication
+
+- **Secure Password Storage:** Passwords are securely stored using hashing to protect user data.
+
+- **JWT-Based Authentication:** JSON Web Tokens are utilized for user authentication during login, ensuring a secure and efficient authentication process.
+
+- **User Roles:** User roles (e.g., user, admin) are defined, and authorization checks are enforced for actions requiring specific roles.
+
+## Documentation
+
+### API Documentation Update
+
+- **Reflecting Changes:** The API documentation is updated to include new endpoints, request/response formats, and query options.
+
+## Query Options for Courses
+
+### Enhanced Course Querying
+
+- **Query Parameters:** Courses can be retrieved based on various query parameters, such as title, price, start date, and more.
+
+- **Pagination and Filtering:** Implemented pagination and filtering options to enhance the precision and efficiency of course retrieval.
+
+## Error Handling
+
+### Robust Error Handling
+
+- **Unauthorized Access:** Implemented appropriate error handling for unauthorized access attempts.
+
+- **Informative Error Messages:** Clear and informative error messages are provided in case of authentication or authorization failures.
+
+## Validation with Zod
+
+### Data Validation with Zod
+
+- **Zod Integration:** Zod is used to validate incoming data for course, category, and review creation and updating operations.
+
+- **Structured Data:** Ensuring that the data adheres to the defined structures in the models.
+
+- **Graceful Error Handling:** Validation errors are handled gracefully, and meaningful error messages are incorporated into the API responses.
+
+---
+
+This project aims to create a secure, well-documented, and efficiently functioning system, incorporating the latest best practices in user authentication, authorization, and data validation.
+
+# Technology-Stacks
+
+- bcrypt: Library for securely hashing passwords.
+- cors: Middleware for enabling Cross-Origin Resource Sharing in Express.
+- dotenv: Module for loading environment variables from a .env file.
+- express: Web application framework for Node.js.
+- http-status: Module for HTTP status codes.
+- jsonwebtoken: Implementation of JSON Web Tokens (JWT) for user authentication.
+- mongoose: MongoDB object modeling tool designed for Node.js.
+- ts-node-dev: TypeScript execution environment with automatic restarts.
+- zod: Schema declaration and validation library for TypeScript.
+- DevDependencies
+- eslint: JavaScript and TypeScript linter tool.
+- prettier: Code formatter for maintaining consistent code style.
+- typescript: Superset of JavaScript that adds static types to the language.
+
+### Endpoints:
 
 # register-user
 
@@ -237,7 +309,7 @@ https://course-management-brainic.vercel.app/api/courses/658bca15661b6a963e99a22
 Method: `PUT`
 Request Body:
 
-- You can send the partial body data to update the fields you want to update or the full data if you want to update every field of a course. Ensure dynamic updating for both primitive and non-primitive data to prevent the mutation of non-primitive data.
+- You can send the partial body data to update the fields you want to update or the full data if you want to update every field of a course. Ensure dynamic updating for both primitive and non-primitive data
 
 # Get-Course-by-ID-with-Reviews
 
@@ -258,30 +330,3 @@ https://course-management-brainic.vercel.app/api/courses/best
 ```
 
 The response includes details about the course, its average rating, and the total number of reviews
-
-# Validation-with-Zod
-
-Use od to validate incoming data for course, category and review creation and updating operations.
-Ensuring that the data adheres to the structure defined in the models.
-Handle validation errors gracefully and provide meaningful error messages in the API responses.
-
-## Implemented User Authentication and Authorization:
-
-- Implemented user registration, login, and password change functionalities as per the specified routes and request/response formats.
-- Ensuring the system securely stores and manages passwords using hashing.
-- Implemented JWT-based authentication for user login.
-- Defining user roles (user, admin) and enforce authorization checks for actions that require specific roles.
-
-### Update Query Options for Courses:
-
-- Implemented the ability to retrieve courses based on various query parameters, as specified in the Project.
-- Implemented pagination and filtering options.
-
-### Error Handling:
-
-- Implemented appropriate error handling for unauthorized access attempts.
-- Provide clear and informative error messages in case of authentication or authorization failures.
-
-### Create Documentation:
-
-- Update or create API documentation to reflect the new endpoints, request/response formats, and query options.
