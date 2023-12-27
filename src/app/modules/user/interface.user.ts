@@ -1,4 +1,5 @@
 import { Model } from 'mongoose';
+import { USER_ROLE } from './constant.user';
 
 export interface TUser {
   username: string;
@@ -8,6 +9,7 @@ export interface TUser {
   // createdAt: Date;
   // updatedAt: Date;
 }
+export type TUserRole = keyof typeof USER_ROLE;
 
 export interface UserModel extends Model<TUser> {
   //instance methods for checking if the user exist

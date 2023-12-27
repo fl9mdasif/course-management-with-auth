@@ -13,7 +13,6 @@ const loginUser = async (payload: TLoginUser) => {
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, `This user is not found !'`);
   }
-  // console.log(user);
 
   //   2. checking if the password is correct
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
@@ -29,7 +28,6 @@ const loginUser = async (payload: TLoginUser) => {
     email: user.email,
     role: user.role,
   };
-  //   console.log(jwtPayload);
 
   // create token
   const accessToken = createToken(

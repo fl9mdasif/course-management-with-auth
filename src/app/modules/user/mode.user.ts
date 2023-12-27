@@ -18,9 +18,6 @@ const userSchema = new Schema<TUser, UserModel>(
     password: {
       type: String,
       required: true,
-      minlength: 4,
-      maxlength: 12,
-      // select: 0,
     },
     role: {
       type: String,
