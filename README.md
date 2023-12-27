@@ -36,7 +36,7 @@
 
 ## 12. [Validation-with-Zod](#Validation-with-Zod)
 
-Implemented proper error handling throughout the application. Using global error handling middleware to catch and handle errors, providing appropriate error responses with status codes and error messages.
+Implementeded proper error handling throughout the application. Using global error handling middleware to catch and handle errors, providing appropriate error responses with status codes and error messages.
 
 ## Endpoints:
 
@@ -264,3 +264,24 @@ The response includes details about the course, its average rating, and the tota
 Use od to validate incoming data for course, category and review creation and updating operations.
 Ensuring that the data adheres to the structure defined in the models.
 Handle validation errors gracefully and provide meaningful error messages in the API responses.
+
+## Implemented User Authentication and Authorization:
+
+- Implemented user registration, login, and password change functionalities as per the specified routes and request/response formats.
+- Ensuring the system securely stores and manages passwords using hashing.
+- Implemented JWT-based authentication for user login.
+- Defining user roles (user, admin) and enforce authorization checks for actions that require specific roles.
+
+### Update Query Options for Courses:
+
+- Implemented the ability to retrieve courses based on various query parameters, as specified in the Project.
+- Implemented pagination and filtering options.
+
+### Error Handling:
+
+- Implemented appropriate error handling for unauthorized access attempts.
+- Provide clear and informative error messages in case of authentication or authorization failures.
+
+### Create Documentation:
+
+- Update or create API documentation to reflect the new endpoints, request/response formats, and query options.
