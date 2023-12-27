@@ -6,7 +6,8 @@ import { Course } from './model.course';
 
 // create course
 const createCourse = catchAsync(async (req, res) => {
-  const result = await courseServices.createCourse(req.body);
+  // console.log(req.user);
+  const result = await courseServices.createCourse(req.user, req.body);
 
   response.createSendResponse(res, {
     statusCode: httpStatus.OK,

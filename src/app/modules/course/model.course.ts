@@ -38,6 +38,10 @@ const courseSchema = new Schema<TCourse>({
     },
     description: { type: String },
   },
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 // Pre-hook to calculate durationInWeeks before saving

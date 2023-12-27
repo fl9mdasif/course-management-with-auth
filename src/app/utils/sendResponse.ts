@@ -21,6 +21,7 @@ const createSendResponse = <T>(res: Response, data: TResponse<T>) => {
     data: data.data,
   });
 };
+
 const getSendResponse = <T>(res: Response, data: TResponse<T>) => {
   // console.log('res', data);
   res.status(data?.statusCode).json({

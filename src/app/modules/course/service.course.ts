@@ -3,10 +3,20 @@ import { Course } from './model.course';
 import { Review } from '../review/model.review';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import { User } from '../user/mode.user';
+import { JwtPayload } from 'jsonwebtoken';
 
 // create course
-const createCourse = async (payload: TCourse) => {
-  const result = await Course.create(payload);
+const createCourse = async (whichUser: JwtPayload, payload: TCourse) => {
+  const user = await User.isUserExists(whichUser.username);
+  const userId = user?._id;
+
+  const newCourse = {
+    ...payload,
+    createdBy: userId,
+  };
+  const result = await Course.create(newCourse);
+
   return result;
 };
 
@@ -60,6 +70,7 @@ const getAllCourses = async (payload: Record<string, unknown>) => {
     const skip = (parseInt(String(page)) - 1) * parseInt(String(limit));
 
     const result = await Course.find(filter)
+      .populate('createdBy')
       .sort(sort)
       .skip(skip)
       .limit(parseInt(String(limit)));
@@ -75,10 +86,12 @@ const getAllCourses = async (payload: Record<string, unknown>) => {
 const getSingleCourseWithReview = async (id: string) => {
   // console.log(id);
 
-  const singleCourse = await Course.findById(id).lean();
+  const singleCourse = await Course.findById(id).populate('createdBy').lean();
 
   // get reviews
-  const reviews = await Review.find({ courseId: id }).lean();
+  const reviews = await Review.find({ courseId: id })
+    .populate('createdBy')
+    .lean();
 
   const courseWithReviews = { ...singleCourse, reviews: [...reviews] };
   // console.log( courseWithReviews);

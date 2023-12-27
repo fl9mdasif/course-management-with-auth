@@ -31,14 +31,15 @@ const userSchema = new Schema<TUser, UserModel>(
 );
 
 // hash the password
+// hash the password
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const student = this;
+  const user = this;
 
   // Store hash in your password DB.
 
-  student.password = await bcrypt.hash(
-    student.password,
+  user.password = await bcrypt.hash(
+    user.password,
     Number(config.bcrypt_salt_rounds),
   );
   next();
@@ -56,13 +57,15 @@ userSchema.statics.isPasswordMatched = async function (
 userSchema.set('toJSON', {
   transform: function (doc, ret) {
     delete ret.password;
+    delete ret.passwordChangedAt;
+    delete ret.__v;
   },
 });
 
 // for auth
 // find user exists
 userSchema.statics.isUserExists = async function (name: string) {
-  return await User.findOne({ username: name }).select('+password');
+  return await User.findOne({ username: name });
 };
 
 // jwt password time checking

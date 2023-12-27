@@ -5,7 +5,7 @@ import { reviewService } from './service.review';
 
 // create course
 const createReview = catchAsync(async (req, res) => {
-  const result = await reviewService.createReview(req.body);
+  const result = await reviewService.createReview(req.user, req.body);
 
   response.createSendResponse(res, {
     statusCode: httpStatus.OK,

@@ -28,17 +28,15 @@ const loginUser = catchAsync(async (req, res) => {
 // change password
 const changePassword = catchAsync(async (req, res) => {
   const { ...passwordData } = req.body;
-  console.log(req.user);
+  // console.log(req.user);
   const result = await authServices.changePassword(req.user, passwordData);
-
-  // set cookie
 
   response.createSendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Password is updated successfully!',
     data: {
-      result,
+      data: result,
     },
   });
 });

@@ -11,7 +11,7 @@ const loginUser = async (payload: TLoginUser) => {
   //
   // 1. checking if the user is exist
   const user = await User.isUserExists(payload.username);
-
+  // console.log(user);
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, `This user is not found !'`);
   }
@@ -70,8 +70,15 @@ const changePassword = async (
       httpStatus.FORBIDDEN,
       `${user.role}'s Password do not matched`,
     );
+  // 03 Check if the new password is different from the current password
+  if (payload.currentPassword === payload.newPassword) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'New password must be different from the old password',
+    );
+  }
 
-  // 03 hash new password
+  // 04 hash new password
   const newHashedPassword = await bcrypt.hash(
     payload.newPassword,
     Number(config.bcrypt_salt_rounds),
@@ -89,6 +96,7 @@ const changePassword = async (
     },
     { new: true, runValidators: true },
   );
+  return user;
 };
 
 export const authServices = {
