@@ -157,7 +157,11 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
   );
 
   if (!updatedBasicCourseInfo) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update basic course');
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Failed to update basic course',
+      '',
+    );
   }
 
   // Update non-primitive fields if available
@@ -174,7 +178,11 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
     );
 
     if (!updatedDetails) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update details');
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to update details',
+        '',
+      );
     }
     return updatedDetails;
   }
@@ -198,7 +206,7 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
     );
 
     if (!deletedCourseTags) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course');
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course', '');
     }
 
     // Filter out the new course fields
@@ -222,6 +230,7 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
       throw new AppError(
         httpStatus.BAD_REQUEST,
         'Failed to update  dynamic course',
+        '',
       );
     }
   }

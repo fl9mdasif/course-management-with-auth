@@ -13,7 +13,11 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // checking if the token is missing
     if (!token) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        'You do not have the necessary permissions to access this resource.', // details
+        'Unauthorized Access', // message
+      );
     }
 
     // checking if the given token is valid
@@ -28,7 +32,11 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const user = await User.isUserExists(username);
 
     if (!user) {
-      throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+      throw new AppError(
+        httpStatus.NOT_FOUND,
+        'This user is not found !',
+        'No user found with the id',
+      );
     }
 
     // check if password update time
@@ -39,13 +47,18 @@ const auth = (...requiredRoles: TUserRole[]) => {
         iat as number,
       )
     ) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        'You do not have the necessary permissions to access this resource.',
+        'Unauthorized Access',
+      );
     }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
         `'${role}' is are not authorized`,
+        'You do not have the necessary permissions to access this resource.',
       );
     }
 

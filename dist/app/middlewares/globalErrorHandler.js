@@ -40,6 +40,7 @@ const globalErrorHandler = (err, req, res, next) => {
     else if (err instanceof AppError_1.default) {
         statusCode = err === null || err === void 0 ? void 0 : err.statusCode;
         message = err === null || err === void 0 ? void 0 : err.message;
+        // errorMessage = err?.errorMessage;
     }
     else if (err instanceof Error) {
         message = err === null || err === void 0 ? void 0 : err.message;

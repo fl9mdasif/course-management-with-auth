@@ -13,13 +13,14 @@ const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExists(payload.username);
   // console.log(user);
   if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, `This user is not found !'`);
+    throw new AppError(httpStatus.NOT_FOUND, '', `This user is not found !'`);
   }
 
   //   2. checking if the password is correct
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
     throw new AppError(
       httpStatus.FORBIDDEN,
+      '',
       `Password of '${user.role}' do not matched`,
     );
   // console.log(user);
@@ -62,7 +63,7 @@ const changePassword = async (
   const user = await User.isUserExists(userData.username);
 
   if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+    throw new AppError(httpStatus.NOT_FOUND, '', 'This user is not found !');
   }
 
   // 02. checking if the password is correct
@@ -70,13 +71,16 @@ const changePassword = async (
     throw new AppError(
       httpStatus.FORBIDDEN,
       `${user.role}'s Password do not matched`,
+      '',
     );
   // 03 Check if the new password is different from the current password
   if (payload.currentPassword === payload.newPassword) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
-      'New password must be different from the old password',
+      '',
+      'Password change failed. Ensure the new password is unique and not among the last 2 used',
     );
+    return null;
   }
 
   // 04 hash new password

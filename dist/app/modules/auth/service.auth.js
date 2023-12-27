@@ -25,11 +25,11 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield mode_user_1.User.isUserExists(payload.username);
     // console.log(user);
     if (!user) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, `This user is not found !'`);
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, '', `This user is not found !'`);
     }
     //   2. checking if the password is correct
     if (!(yield mode_user_1.User.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, user === null || user === void 0 ? void 0 : user.password)))
-        throw new AppError_1.default(http_status_1.default.FORBIDDEN, `Password of '${user.role}' do not matched`);
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, '', `Password of '${user.role}' do not matched`);
     // console.log(user);
     // 3. create token and sent to the client
     const jwtPayload = {
@@ -53,14 +53,15 @@ const changePassword = (userData, payload) => __awaiter(void 0, void 0, void 0, 
     // 01. checking if the user is exist
     const user = yield mode_user_1.User.isUserExists(userData.username);
     if (!user) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !');
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, '', 'This user is not found !');
     }
     // 02. checking if the password is correct
     if (!(yield mode_user_1.User.isPasswordMatched(payload.currentPassword, user === null || user === void 0 ? void 0 : user.password)))
-        throw new AppError_1.default(http_status_1.default.FORBIDDEN, `${user.role}'s Password do not matched`);
+        throw new AppError_1.default(http_status_1.default.FORBIDDEN, `${user.role}'s Password do not matched`, '');
     // 03 Check if the new password is different from the current password
     if (payload.currentPassword === payload.newPassword) {
-        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'New password must be different from the old password');
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, '', 'Password change failed. Ensure the new password is unique and not among the last 2 used');
+        return null;
     }
     // 04 hash new password
     const newHashedPassword = yield bcrypt_1.default.hash(payload.newPassword, Number(config_1.default.bcrypt_salt_rounds));

@@ -23,7 +23,8 @@ const auth = (...requiredRoles) => {
         const token = req.headers.authorization;
         // checking if the token is missing
         if (!token) {
-            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, 'You are not authorized!');
+            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, 'You do not have the necessary permissions to access this resource.', // details
+            'Unauthorized Access');
         }
         // checking if the given token is valid
         const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_access_secret);
@@ -31,15 +32,15 @@ const auth = (...requiredRoles) => {
         // checking if the user is exist
         const user = yield mode_user_1.User.isUserExists(username);
         if (!user) {
-            throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !');
+            throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !', 'No user found with the id');
         }
         // check if password update time
         if (user.passwordChangedAt &&
             mode_user_1.User.isJWTIssuedBeforePasswordChanged(user.passwordChangedAt, iat)) {
-            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, 'You are not authorized !');
+            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, 'You do not have the necessary permissions to access this resource.', 'Unauthorized Access');
         }
         if (requiredRoles && !requiredRoles.includes(role)) {
-            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, `'${role}' is are not authorized`);
+            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, `'${role}' is are not authorized`, 'You do not have the necessary permissions to access this resource.');
         }
         req.user = decoded;
         next();
