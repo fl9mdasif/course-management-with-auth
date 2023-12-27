@@ -96,19 +96,19 @@ This project aims to create a secure, well-documented, and efficiently functioni
 
 # Technology-Stacks
 
+- `typescript`: Superset of JavaScript that adds static types to the language.
+- `express`: Web application framework for Node.js.
+- `nodeJs`: Node.js is a cross-platform, open-source JavaScript runtime environment that can run on Windows, Linux, Unix, macOS, and more.
+- `mongoose`: MongoDB object modeling tool designed for Node.js.
 - `bcrypt`: Library for securely hashing passwords.
 - `cors`: Middleware for enabling Cross-Origin Resource Sharing in Express.
 - `dotenv`: Module for loading environment variables from a .env file.
-- `express`: Web application framework for Node.js.
 - `http`-status: Module for HTTP status codes.
 - `jsonwebtoken`: Implementation of JSON Web Tokens (JWT) for user authentication.
-- `mongoose`: MongoDB object modeling tool designed for Node.js.
 - `ts`-node-dev: TypeScript execution environment with automatic restarts.
 - `zod`: Schema declaration and validation library for TypeScript.
-- `DevDependencies`
 - `eslint`: JavaScript and TypeScript linter tool.
 - `prettier`: Code formatter for maintaining consistent code style.
-- `typescript`: Superset of JavaScript that adds static types to the language.
 
 ### Endpoints:
 
