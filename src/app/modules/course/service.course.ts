@@ -15,6 +15,7 @@ const createCourse = async (whichUser: JwtPayload, payload: TCourse) => {
     ...payload,
     createdBy: userId,
   };
+
   const result = await Course.create(newCourse);
 
   return result;
@@ -92,7 +93,10 @@ const getSingleCourseWithReview = async (id: string) => {
 
   // get reviews
   const reviews = await Review.find({ courseId: id })
-    .populate('createdBy', '-password -createdAt -updatedAt -__v')
+    .populate(
+      'createdBy',
+      '-password -createdAt -updatedAt -__v -passwordChangedAt',
+    )
     .lean();
   // console.log(reviews);
 

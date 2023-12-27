@@ -91,7 +91,7 @@ const getSingleCourseWithReview = (id) => __awaiter(void 0, void 0, void 0, func
         .lean();
     // get reviews
     const reviews = yield model_review_1.Review.find({ courseId: id })
-        .populate('createdBy', '-password -createdAt -updatedAt -__v')
+        .populate('createdBy', '-password -createdAt -updatedAt -__v -passwordChangedAt')
         .lean();
     // console.log(reviews);
     const courseWithReviews = Object.assign(Object.assign({}, singleCourse), { reviews: [...reviews] });
@@ -143,7 +143,7 @@ const updateCourse = (id, updatedData) => __awaiter(void 0, void 0, void 0, func
     // Basic update primitive fields
     const updatedBasicCourseInfo = yield model_course_1.Course.findOneAndUpdate({ _id: id }, { $set: courseRemainingData }, { upsert: true, new: true, runValidators: true });
     if (!updatedBasicCourseInfo) {
-        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update basic course');
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update basic course', '');
     }
     // Update non-primitive fields if available
     if (details) {
@@ -154,7 +154,7 @@ const updateCourse = (id, updatedData) => __awaiter(void 0, void 0, void 0, func
             },
         }, { new: true, upsert: true, runValidators: true });
         if (!updatedDetails) {
-            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update details');
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update details', '');
         }
         return updatedDetails;
     }
@@ -171,7 +171,7 @@ const updateCourse = (id, updatedData) => __awaiter(void 0, void 0, void 0, func
             },
         }, { new: true, runValidators: true });
         if (!deletedCourseTags) {
-            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update course');
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update course', '');
         }
         // Filter out the new course fields
         const newPreTags = tags === null || tags === void 0 ? void 0 : tags.filter((el) => el.name && !el.isDeleted);
@@ -184,7 +184,7 @@ const updateCourse = (id, updatedData) => __awaiter(void 0, void 0, void 0, func
             runValidators: true,
         });
         if (!newTags) {
-            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update  dynamic course');
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update  dynamic course', '');
         }
     }
     // result
