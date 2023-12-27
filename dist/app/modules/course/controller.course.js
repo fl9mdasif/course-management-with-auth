@@ -20,7 +20,8 @@ const sendResponse_1 = require("../../utils/sendResponse");
 const model_course_1 = require("./model.course");
 // create course
 const createCourse = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield service_course_1.courseServices.createCourse(req.body);
+    // console.log(req.user);
+    const result = yield service_course_1.courseServices.createCourse(req.user, req.body);
     sendResponse_1.response.createSendResponse(res, {
         statusCode: http_status_1.default.OK,
         success: true,

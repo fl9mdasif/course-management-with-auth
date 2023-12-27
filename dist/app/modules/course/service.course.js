@@ -28,9 +28,13 @@ const model_course_1 = require("./model.course");
 const model_review_1 = require("../review/model.review");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_1 = __importDefault(require("http-status"));
+const mode_user_1 = require("../user/mode.user");
 // create course
-const createCourse = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield model_course_1.Course.create(payload);
+const createCourse = (whichUser, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield mode_user_1.User.isUserExists(whichUser.username);
+    const userId = user === null || user === void 0 ? void 0 : user._id;
+    const newCourse = Object.assign(Object.assign({}, payload), { createdBy: userId });
+    const result = yield model_course_1.Course.create(newCourse);
     return result;
 });
 // get all course
@@ -68,6 +72,7 @@ const getAllCourses = (payload) => __awaiter(void 0, void 0, void 0, function* (
         // calculate skip value for pagination
         const skip = (parseInt(String(page)) - 1) * parseInt(String(limit));
         const result = yield model_course_1.Course.find(filter)
+            .populate('createdBy')
             .sort(sort)
             .skip(skip)
             .limit(parseInt(String(limit)));
@@ -81,9 +86,14 @@ const getAllCourses = (payload) => __awaiter(void 0, void 0, void 0, function* (
 // getSingleCourseWithReview
 const getSingleCourseWithReview = (id) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(id);
-    const singleCourse = yield model_course_1.Course.findById(id).lean();
+    const singleCourse = yield model_course_1.Course.findById(id)
+        .populate('createdBy', '-password')
+        .lean();
     // get reviews
-    const reviews = yield model_review_1.Review.find({ courseId: id }).lean();
+    const reviews = yield model_review_1.Review.find({ courseId: id })
+        .populate('createdBy', '-password')
+        .lean();
+    // console.log(reviews);
     const courseWithReviews = Object.assign(Object.assign({}, singleCourse), { reviews: [...reviews] });
     // console.log( courseWithReviews);
     return courseWithReviews;
@@ -163,12 +173,13 @@ const updateCourse = (id, updatedData) => __awaiter(void 0, void 0, void 0, func
         if (!deletedCourseTags) {
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update course');
         }
-        //   // Filter out the new course fields
+        // Filter out the new course fields
         const newPreTags = tags === null || tags === void 0 ? void 0 : tags.filter((el) => el.name && !el.isDeleted);
+        // console.log(newPreTags);
         const newTags = yield model_course_1.Course.findByIdAndUpdate(id, {
             $addToSet: { tags: { $each: newPreTags } },
         }, {
-            // upsert: true,
+            upsert: true,
             new: true,
             runValidators: true,
         });
@@ -176,7 +187,8 @@ const updateCourse = (id, updatedData) => __awaiter(void 0, void 0, void 0, func
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, 'Failed to update  dynamic course');
         }
     }
-    const result = yield model_course_1.Course.findById(id);
+    // result
+    const result = yield model_course_1.Course.findById(id).populate('createdBy');
     return result;
 });
 exports.courseServices = {

@@ -4,7 +4,8 @@ const express_1 = require("express");
 const route_category_1 = require("../modules/category/route.category");
 const route_course_1 = require("../modules/course/route.course");
 const route_review_1 = require("../modules/review/route.review");
-const route_courseWithReview_1 = require("../modules/course/route.courseWithReview");
+const route_auth_1 = require("../modules/auth/route.auth");
+const route2_1 = require("../modules/course/route2");
 const router = (0, express_1.Router)();
 const moduleRoute = [
     {
@@ -12,16 +13,20 @@ const moduleRoute = [
         route: route_category_1.categoryRoute,
     },
     {
-        path: '/course',
-        route: route_course_1.courseRoute,
-    },
-    {
         path: '/courses',
-        route: route_courseWithReview_1.courseWithReviewRouter,
+        route: route_course_1.courseRoute,
     },
     {
         path: '/reviews',
         route: route_review_1.reviewRouter,
+    },
+    {
+        path: '/course',
+        route: route2_1.bestCourseRoute,
+    },
+    {
+        path: '/auth',
+        route: route_auth_1.userRoute,
     },
 ];
 moduleRoute.forEach((routeObj) => router.use(routeObj.path, routeObj.route));

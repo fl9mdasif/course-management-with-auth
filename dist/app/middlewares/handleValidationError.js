@@ -7,7 +7,6 @@ const handleValidationError = (err) => {
     return {
         statusCode,
         message: 'Validation Error',
-        // errorMessage: `${err.category.value} is not a valid ID`,
         errorDetails: err,
     };
 };

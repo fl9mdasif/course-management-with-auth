@@ -12,21 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewController = void 0;
+exports.userControllers = void 0;
+// import { response } from 'express';
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = require("../../utils/sendResponse");
-const service_review_1 = require("./service.review");
-// create course
-const createReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield service_review_1.reviewService.createReview(req.user, req.body);
+const service_user_1 = require("./service.user");
+const registerUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //   console.log(req.body);
+    const result = yield service_user_1.userServices.registerUser(req.body);
     sendResponse_1.response.createSendResponse(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Review created successfully',
+        message: 'User registered successfully',
         data: result,
     });
 }));
-exports.reviewController = {
-    createReview,
+exports.userControllers = {
+    registerUser,
 };

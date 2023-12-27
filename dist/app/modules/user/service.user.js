@@ -9,17 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewService = void 0;
-const mode_user_1 = require("../user/mode.user");
-const model_review_1 = require("./model.review");
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createReview = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUser = yield mode_user_1.User.isUserExists(user.username);
-    const userId = isUser === null || isUser === void 0 ? void 0 : isUser._id;
-    const newReview = Object.assign(Object.assign({}, payload), { createdBy: userId });
-    const result = (yield model_review_1.Review.create(newReview)).populate('createdBy');
-    return result;
+exports.userServices = void 0;
+const mode_user_1 = require("./mode.user");
+const registerUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    // create
+    const register = yield mode_user_1.User.create(payload);
+    return register;
 });
-exports.reviewService = {
-    createReview,
+exports.userServices = {
+    registerUser,
 };

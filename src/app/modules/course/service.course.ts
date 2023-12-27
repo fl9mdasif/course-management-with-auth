@@ -204,7 +204,7 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
     // Filter out the new course fields
     const newPreTags = tags?.filter((el) => el.name && !el.isDeleted);
 
-    console.log(newPreTags);
+    // console.log(newPreTags);
 
     const newTags = await Course.findByIdAndUpdate(
       id,

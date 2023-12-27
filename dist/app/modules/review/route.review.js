@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 const controller_review_1 = require("./controller.review");
 const validation_review_1 = require("./validation.review");
 const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
+const auth_1 = __importDefault(require("../../middlewares/auth"));
 const router = express_1.default.Router();
-router.post('/', (0, validateRequest_1.default)(validation_review_1.reviewValidationSchema), controller_review_1.reviewController.createReview);
+router.post('/', (0, auth_1.default)('user'), (0, validateRequest_1.default)(validation_review_1.reviewValidationSchema), controller_review_1.reviewController.createReview);
 exports.reviewRouter = router;

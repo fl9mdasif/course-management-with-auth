@@ -48,6 +48,10 @@ const courseSchema = new mongoose_1.Schema({
         },
         description: { type: String },
     },
+    createdBy: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 });
 // Pre-hook to calculate durationInWeeks before saving
 courseSchema.pre('save', function (next) {
