@@ -12,32 +12,101 @@
 
 # Models:
 
-## 1. [Course Model](#Create-Course)
+## 1. [Register user](#Register-user)
 
-## 2. [Paginated and Filter Courses](#Paginated-and-Filter-Courses)
+## 2. [Login user](#Login-user)
 
-## 3. [Create-Category](#Create-Category)
+## 3. [Change password](#Change-password)
 
-## 4. [Get-All-Categories](#Get-All-Categories)
+## 4. [Course Model](#Create-Course)
 
-## 5. [Review Model](#Create-Review)
+## 5. [Get Course with Paginated and Filter](#Paginated-and-Filter-Courses)
 
-## 6. [Update Course (Partial Update with DynamicUpdate)](#Update-Course-Partial-Update-with-Dynamic-Update)
+## 6. [Create-Category](#Create-Category)
 
-## 7. [Get-Course-by-ID-with-Reviews](#Get-Course-by-ID-with-Reviews)
+## 7. [Get-All-Categories](#Get-All-Categories)
 
-## 8. [Get-the-Best-Course-by-Average-Review-(Rating)](#Get-the-Best-Course-by-Average-Review-Rating)
+## 8. [Review Model](#Create-Review)
 
-## 9. [Validation-with-Zod](#Validation-with-Zod)
+## 9. [Update Course (Partial Update with DynamicUpdate)](#Update-Course-Partial-Update-with-Dynamic-Update)
+
+## 10. [Get-Course-by-ID-with-Reviews](#Get-Course-by-ID-with-Reviews)
+
+## 11. [Get-the-Best-Course-by-Average-Review-(Rating)](#Get-the-Best-Course-by-Average-Review-Rating)
+
+## 12. [Validation-with-Zod](#Validation-with-Zod)
 
 Implemented proper error handling throughout the application. Using global error handling middleware to catch and handle errors, providing appropriate error responses with status codes and error messages.
 
-# Endpoints:
+## Endpoints:
+
+# register-user
+
+```https
+  https://course-management-brainic.vercel.app/api/auth/register
+```
+
+Method: POST
+Request Body:
+
+```json
+{
+  "username": "asif1234",
+  "email": "asif1234@gmial1.com",
+  "password": "123456",
+  "role": "user"
+}
+```
+
+# Login-user
+
+```https
+  https://course-management-brainic.vercel.app/api/auth/login
+```
+
+Method: POST
+Request Body:
+
+- login as user
+
+```json
+{
+  "username": "asif123",
+  "password": "123456a"
+}
+```
+
+- login as admin
+
+```json
+{
+  "username": "admin1",
+  "password": "123456"
+}
+```
+
+# Change-password
+
+```https
+ https://course-management-brainic.vercel.app/api/auth/change-password
+```
+
+Method: POST
+Request Body:
+
+- Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NThiZDc3MWMzODVlZTA2MjVhNTQ1YTEiLCJ1c2VybmFtZSI6ImFkbWluMTIiLCJlbWFpbCI6ImFkbWluMTJAZ21pYWwxLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMzY5NzE2MiwiZXhwIjoxNzAzNzgzNTYyfQ.5ycNSWYL0UH6K0tzUWyNkbJEEGcnthCi4ZaXYvrptdY
+
+```json
+{
+  "currentPassword": "123456",
+  "newPassword": "123456a"
+}
+```
 
 # Create-Course
 
 ```https
-https://course-management-brainic.vercel.app/api/course
+https://course-management-brainic.vercel.app/api/courses
 ```
 
 Method: POST
@@ -162,7 +231,7 @@ create a review with this
 Endpoint:
 
 ```https
-https://course-management-brainic.vercel.app/api/courses/6579d170c8e9b672f03fa6ba
+https://course-management-brainic.vercel.app/api/courses/658bca15661b6a963e99a224
 ```
 
 Method: `PUT`
@@ -176,7 +245,7 @@ Method: `GET`
 Endpoint:
 
 ```https
-https://course-management-brainic.vercel.app/api/courses/6579869ce9e7cb12a3eb09e0/reviews
+https://course-management-brainic.vercel.app/api/courses/658bca15661b6a963e99a224/reviews
 ```
 
 # Get-the-Best-Course-by-Average-Review-(Rating)
@@ -185,7 +254,7 @@ Method: `GET`
 Endpoint:
 
 ```https
-https://course-management-brainic.vercel.app/api/course/best
+https://course-management-brainic.vercel.app/api/courses/best
 ```
 
 The response includes details about the course, its average rating, and the total number of reviews
