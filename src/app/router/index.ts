@@ -3,6 +3,7 @@ import { categoryRoute } from '../modules/category/route.category';
 import { courseRoute } from '../modules/course/route.course';
 import { reviewRouter } from '../modules/review/route.review';
 import { userRoute } from '../modules/auth/route.auth';
+import { bestCourseRoute } from '../modules/course/route2';
 
 const router = Router();
 
@@ -19,6 +20,10 @@ const moduleRoute = [
   {
     path: '/reviews',
     route: reviewRouter,
+  },
+  {
+    path: '/course',
+    route: bestCourseRoute,
   },
   {
     path: '/auth',

@@ -15,7 +15,7 @@ router.post(
 
 router.get('/best', courseControllers.findBestCourse);
 
-router.put('/:courseId', courseControllers.updateCourse);
+router.put('/:courseId', auth('admin'), courseControllers.updateCourse);
 
 router.get('/:courseId/reviews', courseControllers.getSingleCourseWithReview);
 router.get('/', auth('admin'), courseControllers.getAllCourse);

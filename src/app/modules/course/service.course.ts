@@ -86,12 +86,15 @@ const getAllCourses = async (payload: Record<string, unknown>) => {
 const getSingleCourseWithReview = async (id: string) => {
   // console.log(id);
 
-  const singleCourse = await Course.findById(id).populate('createdBy').lean();
+  const singleCourse = await Course.findById(id)
+    .populate('createdBy', '-password')
+    .lean();
 
   // get reviews
   const reviews = await Review.find({ courseId: id })
-    .populate('createdBy')
+    .populate('createdBy', '-password')
     .lean();
+  // console.log(reviews);
 
   const courseWithReviews = { ...singleCourse, reviews: [...reviews] };
   // console.log( courseWithReviews);
@@ -198,8 +201,10 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course');
     }
 
-    //   // Filter out the new course fields
+    // Filter out the new course fields
     const newPreTags = tags?.filter((el) => el.name && !el.isDeleted);
+
+    console.log(newPreTags);
 
     const newTags = await Course.findByIdAndUpdate(
       id,
@@ -207,7 +212,7 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
         $addToSet: { tags: { $each: newPreTags } },
       },
       {
-        // upsert: true,
+        upsert: true,
         new: true,
         runValidators: true,
       },
@@ -220,7 +225,8 @@ const updateCourse = async (id: string, updatedData: Partial<TCourse>) => {
       );
     }
   }
-  const result = await Course.findById(id);
+  // result
+  const result = await Course.findById(id).populate('createdBy');
   return result;
 };
 
